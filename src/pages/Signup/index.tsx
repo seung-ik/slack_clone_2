@@ -1,37 +1,67 @@
-import React, { ChangeEvent, useState } from 'react'
-import { Header ,Label,Input,Container,Form,Button} from '@pages/Signup/style'
+import React, {useCallback, useState } from 'react'
+import { Header ,Label,Input,Container,Form,Button,Error} from '@pages/Signup/style'
 import { Link } from 'react-router-dom'
+import useInput from '@hooks/useInput'
 
 
 const Signup = () => {
-  const [email,setEmail]=useState("")
-  const [nickname,setnickname]=useState("")
-  const [password,setpassword]=useState("")
-  const [passwordCheck,setpasswordCheck]=useState("")
-  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>)=>{
-    setEmail(e.target.value)
-  }
+  const [email,onChangeEmail]=useInput("")
+  const [nickname,onChangeNickname]=useInput("")
+  const [password,setPassword]=useState("")
+  const [passwordCheck,setPasswordCheck]=useState("")
+  const [missmatchError, setMissmatchError]=useState(false)
+  
+  const onChangePassword = useCallback((e)=>{
+    setPassword(e.target.value)
+    setMissmatchError(e.target.value !== passwordCheck)
+  },[passwordCheck])
+
+  const onChangePasswordCheck = useCallback((e)=>{
+    setPasswordCheck(e.target.value)
+    setMissmatchError(e.target.value !== password)
+  },[password])
+
+  const onSubmmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if(!missmatchError){
+        console.log('회원가입시도 ok')
+      }
+      console.log({
+        email:email,
+        nickname:nickname,
+        password,
+        passwordCheck,
+      })
+    },
+    [email,nickname,password,passwordCheck,missmatchError],
+  )
   return (
     <Container>
       <Form>
         <Header>회원가입</Header>
         <Label>
           <span>email</span>
-          <Input type="text" id="email" name="email" value={email} onChange={onChangeEmail}></Input>
+          <Input type="email" id="email" name="email" value={email} onChange={onChangeEmail}></Input>
         </Label>
         <Label>
           <span>닉네임</span>
-          <Input type="text" id="nickname" name="nickname" value={nickname} onChange={onChangeEmail}></Input>
+          <Input type="text" id="nickname" name="nickname" value={nickname} onChange={onChangeNickname}></Input>
         </Label>
         <Label>
           <span>패스워드</span>
-          <Input type="password" id="password" name="password" value={password} onChange={onChangeEmail}></Input>
+          <Input type="password" id="password" name="password" value={password} onChange={onChangePassword}></Input>
         </Label>
         <Label>
           <span>패스워드 확인</span>
-          <Input type="password" id="passwordCheck" name="passwordCheck" value={passwordCheck} onChange={onChangeEmail}></Input>
+          <Input type="password" id="passwordCheck" name="passwordCheck" value={passwordCheck} onChange={onChangePasswordCheck}></Input>
         </Label>
-        <Button>회원가입완료</Button>
+        {!nickname && <Error>닉네임을 입력해주세요</Error>}
+        {missmatchError&& <Error>비밀번호가 일치하지 않네요</Error>}
+        {/* {signupError&& <Error>비밀번호가 일치하지 않네요</Error>}
+        {signupSuccess&& <Error>비밀번호가 일치하지 않네요</Error>} */}
+        
+        <Button onClick={onSubmmit}>회원가입완료</Button>
       </Form>
       <div>
         이미 회원이신가요?&nbsp;&nbsp;&nbsp;

@@ -33,3 +33,7 @@ export const Button = styled.button`
   margin-top: 20px;
   font-size:30px;
 `;
+export const Error = styled.div`
+  font-size:30px;
+  color:red;
+`;
