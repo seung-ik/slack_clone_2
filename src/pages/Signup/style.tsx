@@ -37,3 +37,7 @@ export const Error = styled.div`
   font-size:30px;
   color:red;
 `;
+export const Success = styled.div`
+  font-size:30px;
+  color:green;
+`;
