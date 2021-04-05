@@ -27,6 +27,7 @@ const Signup = () => {
   const onSubmmit = useCallback(
     (e) => {
       e.preventDefault();
+      if(!nickname)
       if(!missmatchError){
         setSignupError("")
         setSignupSuccess(false)
@@ -64,7 +65,7 @@ const Signup = () => {
           <span>패스워드 확인</span>
           <Input type="password" id="passwordCheck" name="passwordCheck" value={passwordCheck} onChange={onChangePasswordCheck}></Input>
         </Label>
-        {!nickname && <Error>닉네임을 입력해주세요</Error>}
+        {/* {!nickname && <Error>닉네임을 입력해주세요</Error>} */}
         {missmatchError&& <Error>비밀번호가 일치하지 않네요</Error>}
         {signupError&& <Error>{signupError}</Error>}
         {signupSuccess && <Success>회원가입에 성공하셧습니다. 로그인 하세요</Success> }
