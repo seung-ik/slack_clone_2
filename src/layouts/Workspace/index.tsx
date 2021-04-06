@@ -1,11 +1,12 @@
 import { Channels, Chats, Header, MenuScroll, ProfileImg, RightMenu, WorkspaceName, Workspaces, WorkspaceWrapper } from './style'
 import fetcher from '@/utils/fetcher'
 import axios from 'axios'
-import React, { FC, useCallback } from 'react'
+import React, { FC, useCallback, useState } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import useSWR from 'swr'
 import gravatar from 'gravatar'
 import loadable from '@loadable/component'
+import Menu from '@/components/Menu'
 
 
 const Channel = loadable(()=>import("@pages/Channel"))
@@ -18,7 +19,12 @@ const Workspace:FC = ({children}) => {
     axios.post('/api/users/logout',null,{withCredentials:true}).then(()=>
     mutate(false))
   },[])
+  const [showUserMenu, setShowUserMenu] = useState(false)
   
+  const onClickUserProfile = useCallback(()=>{
+    setShowUserMenu((prev)=>!prev)
+  },[])
+
   if(!data){
     return <Redirect to="/login"/>
   }
@@ -27,11 +33,11 @@ const Workspace:FC = ({children}) => {
     <div>
       <Header>
         <RightMenu>
-          <span>
-            {console.log(data)}
+          <span onClick={onClickUserProfile}>
             <ProfileImg src={gravatar.url(data.email,{s:"50px",d:'retro'})} alt=''/>  
           </span>
         </RightMenu>
+        {showUserMenu && <Menu>메뉴</Menu>}
       </Header>  
       <button onClick={onLogout}>로그아웃</button>
       <WorkspaceWrapper>
