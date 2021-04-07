@@ -31,14 +31,17 @@ export const WorkspaceWrapper = styled.div`
 `
 export const Workspaces = styled.div`
   border:1px solid black;
+  display:flex;
   flex-direction : column;
   flex:0.5;
   background-color : rgb(218, 114, 76);
+  align-items : center;
+  padding : 15px 0 0 ;
 `
 export const Channels = styled.div`
   border:1px solid black;
   flex:1.8;
-  display : inline-flex;
+  display : flex;
   flex-direction : column;
   background-color : rgb(218, 114, 76);
 `
@@ -60,4 +63,54 @@ export const MenuScroll = styled.div`
 export const Chats = styled.div`
   border:1px solid black;
   flex:7;
+`
+export const MenuButton = styled.button`
+  width: 360px;
+  height : auto;
+  border : none;
+  background-color : transparent;
+  border-top : 1px solid black;
+  padding-top : 5px;
+  font-size : 1.5rem;
+`
+export const ProfileModal = styled.div`
+  display: flex;
+  padding: 20px 10px 20px 10px;
+  font-size : 1.3rem;
+  & > div {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+  }
+  & > img{
+    width : 36px;
+    height : 36px;
+  }
+`
+
+export const AddButton = styled.button`
+display: inline-block;
+width: 50px;
+height: 50px;
+border-radius: 10px;
+background: transparent;
+border: none;
+margin-bottom: 15px;
+font-size: 40px;
+font-weight: 700;
+color: white;
+cursor: pointer;
+`
+export const WorkspaceButton = styled.button`
+display: inline-block;
+width: 50px;
+height: 50px;
+border-radius: 10px;
+background: white;
+border: 3px solid #3f0e40;
+margin-bottom: 15px;
+font-size: 18px;
+font-weight: 700;
+color: black;
+cursor: pointer;
 `
